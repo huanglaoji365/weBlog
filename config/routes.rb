@@ -10,7 +10,21 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
+  # 前端路由转发
+  get '/login', to: 'home#index'
+  get '/register', to: 'home#index'
+
+  # 后端登录注册接口
+  post '/login', to: 'auth#login'
+  post '/register', to: 'auth#register'
+
+  # 用户信息接口
+  get '/profile', to: 'users#profile'
+
   # Defines the root path route ("/")
   # root "posts#index"
   root "home#index"
+
+  # SPA 前端路由兜底，交给 Vue 处理
+  get '*path', to: 'home#index', constraints: ->(req) { !req.xhr? && req.format.html? }
 end

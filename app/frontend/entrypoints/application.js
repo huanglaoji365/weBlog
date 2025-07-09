@@ -5,33 +5,47 @@
 //    <%= vite_javascript_tag 'application' %>
 console.log('Vite ⚡️ Rails')
 
-// If using a TypeScript entrypoint file:
-//     <%= vite_typescript_tag 'application' %>
-//
-// If you want to use .jsx or .tsx, add the extension:
-//     <%= vite_javascript_tag 'application.jsx' %>
 
 console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify.app/guide/rails')
 
-// Example: Load Rails libraries in Vite.
-//
-// import * as Turbo from '@hotwired/turbo'
-// Turbo.start()
-//
-// import ActiveStorage from '@rails/activestorage'
-// ActiveStorage.start()
-//
-// // Import all channels.
-// const channels = import.meta.globEager('./**/*_channel.js')
-
-// Example: Import a stylesheet in app.vue/frontend/index.css
-// import '~/index.css'
-
 import { createApp } from 'vue'
 import App from '../app.vue'
+import router from '../router/index.js'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import axios from 'axios'
+import { createPinia } from 'pinia'
+
+// 全局 axios 请求拦截器，自动带 token
+axios.interceptors.request.use(
+  config => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  },
+  error => Promise.reject(error)
+)
+
+// 全局 axios 响应拦截器，处理未登录/过期
+axios.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token')
+      // 可选：自动跳转到登录页
+      // window.location.href = '/login'
+    }
+    return Promise.reject(error)
+  }
+)
 
 document.addEventListener('DOMContentLoaded', () => {
     const app = createApp(App)
+    app.use(createPinia())
+    app.use(router)
+    app.use(ElementPlus)
     app.mount('#app')
 })
 
