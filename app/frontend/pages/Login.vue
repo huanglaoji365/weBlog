@@ -73,7 +73,9 @@ function logout() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f5f6fa;
+  background: var(--background-color);
+  color: var(--text-color);
+  transition: background 0.2s, color 0.2s;
 }
 .login-card {
   width: 360px;
@@ -84,6 +86,10 @@ function logout() {
   text-align: center;
   margin-bottom: 24px;
   color: #333;
+  transition: color 0.2s;
+}
+[data-theme="dark"] .title {
+  color: #fff;
 }
 .link {
   display: block;

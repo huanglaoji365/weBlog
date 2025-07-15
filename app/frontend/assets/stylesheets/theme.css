@@ -1,0 +1,15 @@
+:root {
+  --primary-color: #409eff;
+  --background-color: #fff;
+  --text-color: #333;
+}
+
+[data-theme="dark"] {
+  --primary-color: #409eff;
+  --background-color: #181c24;
+  --text-color: #f5f6fa;
+  --border-color: #2c2f36;
+  --hover-background-color: #23262e;
+  --hover-border-color: #409eff;
+  --hover-text-color: #409eff;
+} 

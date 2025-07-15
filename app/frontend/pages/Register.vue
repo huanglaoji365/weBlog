@@ -86,7 +86,9 @@ async function fetchProfile() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f5f6fa;
+  background: var(--background-color);
+  color: var(--text-color);
+  transition: background 0.2s, color 0.2s;
 }
 .register-card {
   width: 400px;
@@ -97,6 +99,10 @@ async function fetchProfile() {
   text-align: center;
   margin-bottom: 24px;
   color: #333;
+  transition: color 0.2s;
+}
+[data-theme="dark"] .title {
+  color: #fff;
 }
 .link {
   display: block;

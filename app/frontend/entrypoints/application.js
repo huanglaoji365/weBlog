@@ -13,8 +13,10 @@ import App from '../app.vue'
 import router from '../router/index.js'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 import axios from 'axios'
 import { createPinia } from 'pinia'
+import '../assets/stylesheets/theme.css'
 
 // 全局 axios 请求拦截器，自动带 token
 axios.interceptors.request.use(
