@@ -17,6 +17,7 @@ import 'element-plus/theme-chalk/dark/css-vars.css'
 import axios from 'axios'
 import { createPinia } from 'pinia'
 import '../assets/stylesheets/theme.css'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 // 全局 axios 请求拦截器，自动带 token
 axios.interceptors.request.use(
@@ -48,6 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
     app.use(createPinia())
     app.use(router)
     app.use(ElementPlus)
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+        app.component(key, component)
+    }
     app.mount('#app')
 })
 

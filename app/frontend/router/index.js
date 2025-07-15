@@ -7,11 +7,13 @@ import Dashboard from '../pages/Dashboard.vue'
 import Profile from '../pages/Profile.vue'
 import Blog from '../pages/Blog.vue'
 import About from '../pages/About.vue'
+import Work from '../pages/Work.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/blog', name: 'Blog', component: Blog },
   { path: '/about', name: 'About', component: About },
+  { path: '/work', name: 'Work', component: Work },
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
   { path: '/forgot', name: 'ForgotPassword', component: ForgotPassword },
