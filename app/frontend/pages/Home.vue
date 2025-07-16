@@ -2,10 +2,13 @@
   <div class="apps-layout">
     <div class="apps-main-content">
       <main class="main-content">
-        <SidebarApps />
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <SidebarApps />
+        </div>
         <div class="main-center">
           <Swiper :images="images" :interval="3000" />
           <NewsBar />
+          <BlogList />
         </div>
       </main>
     </div>
@@ -16,6 +19,7 @@
 import Swiper from '../components/Swiper.vue'
 import SidebarApps from '../components/SidebarApps.vue'
 import NewsBar from '../components/NewsBar.vue'
+import BlogList from '../components/BlogList.vue'
 
 const images = [
   'https://picsum.photos/id/1018/600/300',
@@ -24,9 +28,10 @@ const images = [
 ]
 </script>
 
-<style>
+<style lang="scss">
 .apps-layout {
   display: flex;
+  min-width: 1035px;
   min-height: 100vh;
   background: var(--background-color);
   padding-top: 30px;

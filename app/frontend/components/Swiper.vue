@@ -11,7 +11,7 @@
         v-for="(img, idx) in images"
         :key="idx"
     >
-      <img :src="img" alt="轮播图" class="carousel-img"/>
+      <img v-lazy="img" alt="轮播图" class="carousel-img"/>
     </el-carousel-item>
   </el-carousel>
 </template>

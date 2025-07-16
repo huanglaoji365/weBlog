@@ -3,13 +3,22 @@
     <div class="navbar-left">
       <span class="logo-text">weBlog</span>
     </div>
-    <!-- <div class="navbar-inner">
-      <nav class="navbar-center">
-        <router-link to="/">首页</router-link>
-        <router-link to="/blog">博客</router-link>
-        <router-link to="/about">关于</router-link>
-      </nav>
-    </div> -->
+    <div class="navbar-inner">
+      <el-tabs
+        v-model="activeTab"
+        @tab-click="handleTabClick"
+        class="navbar-center"
+        tab-position="top"
+        stretch
+      >
+        <el-tab-pane
+          v-for="item in tabList"
+          :key="item.path"
+          :label="item.label"
+          :name="item.path"
+        />
+      </el-tabs>
+    </div>
     <div class="navbar-right">
       <el-button
         class="theme-toggle-btn"
@@ -40,8 +49,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '../store/user'
 import { Sunny, Moon } from '@element-plus/icons-vue'
@@ -72,6 +81,26 @@ onMounted(() => {
 
 const userStore = useUserStore()
 const router = useRouter()
+const route = useRoute()
+const tabList = [
+  { label: '首页', path: '/' },
+  { label: '博客', path: '/blog' },
+  { label: '实战', path: '/work' },
+  { label: '标签', path: '/tags' },
+  { label: '分类', path: '/category' },
+  { label: '关于', path: '/about' },
+]
+const activeTab = ref(route.path)
+
+watch(() => route.path, (newPath) => {
+  activeTab.value = newPath
+})
+
+function handleTabClick(tab) {
+  if (tab.props.name !== route.path) {
+    router.push(tab.props.name)
+  }
+}
 
 const showSearch = ref(false)
 const searchKeyword = ref('')
@@ -118,87 +147,71 @@ function goProfile() {
   padding-left: 32px;
 }
 .navbar-inner {
-  max-width: 1200px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: center;
   height: 100%;
-  padding-left: 32px;
-  padding-right: 120px; /* 给右侧按钮留出空间 */
-  box-sizing: border-box;
-}
-.logo-img {
-  width: 36px;
-  height: 36px;
-  margin-right: 10px;
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(64,158,255,0.08);
-  background: #f7fafd;
+  margin-left: 120px;
 }
 .logo-text {
   font-size: 24px;
   font-weight: bold;
   color: var(--primary-color);
   letter-spacing: 1.5px;
-  margin-right: 18px;
+  margin-right: 20px;
 }
 .navbar-center {
   display: flex;
   align-items: center;
-  gap: 0;
-  background: #f7fafd;
+  min-width: 500px;
+}
+.el-tabs.navbar-center {
+  --el-tabs-header-height: 48px;
+  --el-tabs-header-bg-color: #f7fafd;
+  --el-tabs-active-color: var(--primary-color);
+  --el-tabs-header-font-size: 16px;
+  --el-tabs-header-font-weight: 500;
   border-radius: 8px;
-  padding: 2px 6px;
-  height: 40px;
   box-shadow: 0 1px 4px rgba(64,158,255,0.03);
-  margin: 0 auto;
+  padding: 0 12px;
+  margin: 0;
+  height: 48px;
 }
-.navbar-center a {
-  position: relative;
-  color: #333;
-  font-size: 16px;
-  text-decoration: none;
-  padding: 0 28px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  border-radius: 6px 6px 0 0;
-  transition: background 0.2s, color 0.2s;
-  margin: 0 2px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
+.el-tabs__item {
+  padding: 0 24px !important;
 }
-.navbar-center a.router-link-exact-active,
-.navbar-center a.active-tab {
-  color: var(--primary-color);
-  background: var(--background-color);
+.el-tabs__item.is-active {
+  color: var(--primary-color) !important;
   font-weight: 600;
+  background: var(--background-color);
 }
-.navbar-center a.router-link-exact-active::after,
-.navbar-center a.active-tab::after {
-  content: '';
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 0;
-  height: 3px;
-  background: var(--primary-color);
-  border-radius: 2px 2px 0 0;
-}
-.navbar-center a:hover {
+.el-tabs__item:hover {
   background: #eaf4ff;
   color: var(--primary-color);
 }
-.navbar-center a:focus,
-.navbar-center a:focus-visible,
-.navbar-center a.router-link-exact-active:focus,
-.navbar-center a.router-link-exact-active:focus-visible,
-.navbar-center a:active,
-.navbar-center a::-moz-focus-inner {
-  outline: none !important;
+.el-tabs__header {
+  border-bottom: none !important;
   box-shadow: none !important;
-  background: inherit !important;
+}
+:deep(.el-tabs__header) {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+:deep(.el-tabs__nav-wrap::after) {
+  display: none !important;
+}
+:deep(.el-tabs__item) {
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+@media (max-width: 900px) {
+  .navbar-inner { margin-left: 60px; }
+  .logo-text { font-size: 16px; margin-right: 10px; }
+  .el-tabs.navbar-center { --el-tabs-header-font-size: 14px; }
+}
+@media (max-width: 600px) {
+  .navbar-inner { margin-left: 4px; }
+  .logo-text { font-size: 14px; margin-right: 6px; }
+  .el-tabs.navbar-center { --el-tabs-header-font-size: 12px; }
 }
 .navbar-right {
   position: absolute;
@@ -301,15 +314,5 @@ function goProfile() {
   background-color: var(--hover-background-color);
   border-color: var(--hover-border-color);
   color: var(--hover-text-color);
-}
-@media (max-width: 900px) {
-  .navbar-inner { padding-left: 10px; padding-right: 80px; }
-  .navbar-right { padding-right: 10px; }
-  .logo-text { font-size: 16px; }
-}
-@media (max-width: 600px) {
-  .navbar-inner { flex-direction: column; height: auto; padding-left: 4px; padding-right: 4px; }
-  .navbar-right { padding-right: 4px; }
-  .logo-img { width: 28px; height: 28px; }
 }
 </style>

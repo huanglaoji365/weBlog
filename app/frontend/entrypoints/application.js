@@ -18,6 +18,9 @@ import axios from 'axios'
 import { createPinia } from 'pinia'
 import '../assets/stylesheets/theme.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import lazyPlugin from "vue3-lazy";
+import loadingpic from "@/assets/images/load.gif";
+import errorpic from "@/assets/images/404.png";
 
 // 全局 axios 请求拦截器，自动带 token
 axios.interceptors.request.use(
@@ -49,6 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
     app.use(createPinia())
     app.use(router)
     app.use(ElementPlus)
+    // 懒加载
+    app.use(lazyPlugin, {
+        loading: loadingpic, // 加载时默认图片
+        error: errorpic, // 图片失败时默认图片
+    });
     for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
         app.component(key, component)
     }

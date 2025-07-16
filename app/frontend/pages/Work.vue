@@ -82,11 +82,7 @@
 import { onMounted, ref } from "vue";
 import { Search } from "@element-plus/icons-vue";
 let searchIpt = ref("");
-const pageNo = ref(1);
-const pageSize = ref(6);
-let pageLayout = ref("sizes, prev, pager, next, jumper");
 const background = ref(false);
-const disabled = ref(false);
 let total = ref();
 const workList = ref([]);
 

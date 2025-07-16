@@ -8,6 +8,8 @@ import Profile from '../pages/Profile.vue'
 import Blog from '../pages/Blog.vue'
 import About from '../pages/About.vue'
 import Work from '../pages/Work.vue'
+import Tags from "../pages/Tags.vue";
+import Category from "../pages/Category.vue";
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
@@ -19,6 +21,8 @@ const routes = [
   { path: '/forgot', name: 'ForgotPassword', component: ForgotPassword },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard, meta: { requiresAdmin: true } },
   { path: '/profile', name: 'Profile', component: Profile, meta: { requiresAuth: true } },
+  { path: '/tags', name: 'Tags', component: Tags },
+  { path: '/category', name: 'Category', component: Category },
 ]
 
 const router = createRouter({
